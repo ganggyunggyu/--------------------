@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,50 +8,64 @@
     <title>끝말잇기</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+    <div class="center-container">
     <div class="main-container">
         <div><span class="order"></span>번째 참가자</div>
-        <div>제시어: <span class="word"></span></div>
-        <input class='result-value'type="text">
-        <button class="btn">띠용</button>
+        <div><span class="word"></span></div>
+        <input class='result-value' type="text" placeholder="값을입력해!">
+        <button type="submit" class="btn">클릭!</button>
+
+        <img src="https://icons8.kr/icon/yv6NNBSjux4x/double-tap-gesture" alt="">
     </div>
+</div>
     <script>
-        const num = Number(prompt('몇 명이 참가합니까?'))
+        const num = Number(prompt('몇 명이 참가합니까?'));
         const btn = document.querySelector('.btn');
         const resultValue = document.querySelector('.result-value');
         const order = document.querySelector('.order');
         let word = document.querySelector('.word');
-        let 제시어;
+
+        let startWord;
         let newWord;
         let count = 1;
         order.innerHTML = count;
+        
 
+
+        const orderCount = () => {
+            if (num == count) {
+                count = 0;
+            }
+        }
         const reFresh = () => {
-            word.innerHTML = 제시어;
+            word.innerHTML = startWord;
             resultValue.value = '';
             count = count + 1;
             order.innerHTML = count;
         }
-
-        btn.addEventListener('click', function(){
-            if(제시어 == null || 제시어 == undefined){      //첫번째 순서 제시어가 없으므로 제시어를 생성해준다
-                제시어 = resultValue.value;     //resultValue에 입력 된 값을 제시어 변수에 넣어주고 HTML에 표시해준다
+        btn.addEventListener('click', function () {
+            orderCount()
+            if (startWord == null || startWord == undefined) {      //첫번째 순서 제시어의 값이 비어있다면 제시어를 채워주는 조건문
+                startWord = resultValue.value;     //resultValue에 입력 된 값을 제시어 변수에 넣어주고 HTML에 표시해준다
                 reFresh();
-            }else{          //제시어가 있는 경우의 코드이다
+            } else if (startWord !== null || startWord !== undefined) {          //제시어가 있는 경우의 코드이다
                 newWord = resultValue.value;
-                if(제시어[제시어.length-1] == newWord[0]){
-                    제시어 = newWord;
+                if (startWord[startWord.length - 1] == newWord[0]) {
+                    startWord = newWord;
                     reFresh();
-                }else{
+                } else {
                     alert("땡");
                     resultValue.value = '';
                     count = 1;
                     order.innerHTML = count;
-                    제시어 = '';
-                    word.innerHTML = 제시어;
+                    startWord = null;
+                    word.innerHTML = startWord;
                 }
             }
         })
     </script>
 </body>
+
 </html>
